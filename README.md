@@ -18,33 +18,46 @@ O **SEOP-RO** digitaliza esse processo. O professor seleciona o aluno, e o siste
 ## 🛠️ Tecnologias Utilizadas
 
 ### Backend (API)
-- **Java 24** (Última versão) & **Spring Boot 3**
+- **Java 24** (Versão atualizada)
+- **Spring Boot 3** (Framework principal)
 - **Spring Data JPA** (Persistência de dados)
 - **H2 Database** (Banco em memória para testes rápidos)
-- **DTO Pattern** (Data Transfer Object com Records)
+- **DTO Pattern** (Data Transfer Object com Java Records)
 - **Architecture:** Package by Feature (Organização por domínio: Aluno/Ocorrência)
 
 ### Frontend (Interface)
-- **React.js** com **Vite** (Performance)
-- **Axios** (Consumo de API REST)
+- **React.js** com **Vite** (Build otimizado)
+- **Axios** (Integração com API REST)
 - **React Router DOM** (Navegação SPA)
-- **CSS Modules** (Estilização limpa e responsiva)
+- **CSS Modules** (Visual limpo e corporativo)
 
 ---
 
 ## 🚀 Como rodar o projeto
 
-Este é um mono-repo contendo Backend e Frontend.
+Este é um mono-repo contendo Backend e Frontend. Você precisará de dois terminais.
 
-### 1️⃣ Rodando o Backend (API)
-1. Abra a pasta raiz no IntelliJ (ou sua IDE Java favorita).
-2. Aguarde o Maven baixar as dependências.
-3. Certifique-se de ter o **JDK 24** configurado.
-4. Execute a classe `SeopApplication.java`.
-5. O Backend rodará em: `http://localhost:8080`.
-   * *Nota: O sistema popula o banco automaticamente com alunos fictícios ao iniciar.*
+### 1️⃣ Passo 1: Backend (API)
+1. Abra a pasta raiz do projeto no **IntelliJ IDEA**.
+2. Aguarde o Maven baixar todas as dependências do Java.
+3. Localize a classe `src/main/java/com/seopro/api/SeopApplication.java`.
+4. Clique no botão **Run** (▶️).
+5. O Backend iniciará na porta `8080`.
+   * *O sistema popula o banco automaticamente com 3 alunos fictícios.*
 
-### 2️⃣ Rodando o Frontend (Web)
-1. Abra o terminal na pasta `seop-web`:
+### 2️⃣ Passo 2: Frontend (Web)
+Para rodar a interface, é necessário ter o **Node.js** instalado.
+
+1. Abra um terminal e entre na pasta do frontend:
    ```bash
    cd seop-web
+
+2. Instale as dependências do projeto:
+   ```bash
+   npm install
+   
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+
+4. O terminal mostrará o link de acesso (geralmente http://localhost:5173 ); Clique nele para abrir o sistema.

@@ -3,6 +3,7 @@ package com.seopro.api.ocorrencia.controller;
 import com.seopro.api.ocorrencia.model.Ocorrencia;
 import com.seopro.api.ocorrencia.model.dto.OcorrenciaDTO;
 import com.seopro.api.ocorrencia.service.OcorrenciaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,17 @@ public class OcorrenciaController {
     }
 
     @PostMapping
-    public Ocorrencia criar(@RequestBody OcorrenciaDTO dados) {
+    // Adicionei o @Valid aqui antes do @RequestBody
+    public Ocorrencia criar(@RequestBody @Valid OcorrenciaDTO dados) {
         return service.criar(dados);
     }
+
+    @Autowired
+    private com.seopro.api.infra.service.IAService iaService; // Injeção
+
+    @PostMapping("/ia/melhorar-texto") // Endpoint
+    public String usarIA(@RequestBody String texto) {
+        return iaService.melhorarTexto(texto);
+    }
+
 }

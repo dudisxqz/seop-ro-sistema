@@ -3,7 +3,7 @@
 > Sistema Full Stack para gestão de ocorrências escolares, visando facilitar a comunicação entre professores e coordenação pedagógica.
 
 ![Status](https://img.shields.io/badge/Status-Concluído-success)
-![Java](https://img.shields.io/badge/Java-17-orange)
+![Java](https://img.shields.io/badge/Java-24-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring-Boot-green)
 ![React](https://img.shields.io/badge/React-Vite-blue)
 
@@ -18,10 +18,10 @@ O **SEOP-RO** digitaliza esse processo. O professor seleciona o aluno, e o siste
 ## 🛠️ Tecnologias Utilizadas
 
 ### Backend (API)
-- **Java 17** & **Spring Boot 3**
+- **Java 24** (Última versão) & **Spring Boot 3**
 - **Spring Data JPA** (Persistência de dados)
 - **H2 Database** (Banco em memória para testes rápidos)
-- **DTO Pattern** (Data Transfer Object para segurança dos dados)
+- **DTO Pattern** (Data Transfer Object com Records)
 - **Architecture:** Package by Feature (Organização por domínio: Aluno/Ocorrência)
 
 ### Frontend (Interface)
@@ -39,9 +39,10 @@ Este é um mono-repo contendo Backend e Frontend.
 ### 1️⃣ Rodando o Backend (API)
 1. Abra a pasta raiz no IntelliJ (ou sua IDE Java favorita).
 2. Aguarde o Maven baixar as dependências.
-3. Execute a classe `SeopApplication.java`.
-4. O Backend rodará em: `http://localhost:8080`.
-    * *Nota: O sistema popula o banco automaticamente com alunos fictícios ao iniciar.*
+3. Certifique-se de ter o **JDK 24** configurado.
+4. Execute a classe `SeopApplication.java`.
+5. O Backend rodará em: `http://localhost:8080`.
+   * *Nota: O sistema popula o banco automaticamente com alunos fictícios ao iniciar.*
 
 ### 2️⃣ Rodando o Frontend (Web)
 1. Abra o terminal na pasta `seop-web`:

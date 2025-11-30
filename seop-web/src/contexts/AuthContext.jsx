@@ -1,35 +1,45 @@
 import { createContext, useState, useEffect } from "react";
 import api from "../services/api";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext({});
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = localStorage.getItem("seop_token");
-        const login = localStorage.getItem("seop_user");
-        const role = localStorage.getItem("seop_role");
+        function loadStorageData() {
+            const token = localStorage.getItem("seop_token");
+            const login = localStorage.getItem("seop_user");
+            const role = localStorage.getItem("seop_role");
 
-        if (token && login) {
-            api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-            setUser({ login, role });
+            if (token && login) {
+                api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+                setUser({ login, role });
+            }
+
+            setLoading(false);
         }
-        setLoading(false);
+
+        loadStorageData();
     }, []);
 
     async function signIn(login, senha) {
-        const response = await api.post("/login", { login, senha });
+        try {
+            const response = await api.post("/login", { login, senha });
 
-        const { token, role } = response.data;
+            const { token, role } = response.data;
 
-        localStorage.setItem("seop_token", token);
-        localStorage.setItem("seop_user", login);
-        localStorage.setItem("seop_role", role);
+            localStorage.setItem("seop_token", token);
+            localStorage.setItem("seop_user", login);
+            localStorage.setItem("seop_role", role);
 
-        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        setUser({ login, role });
+            api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            setUser({ login, role });
+
+        } catch (error) {
+            throw error;
+        }
     }
 
     function signOut() {

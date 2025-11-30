@@ -5,12 +5,11 @@ import api from '../services/api';
 function NovaOcorrencia() {
     const navigate = useNavigate();
     const [alunos, setAlunos] = useState([]);
-
     const [alunoId, setAlunoId] = useState('');
     const [turmaDisplay, setTurmaDisplay] = useState('');
-    const [tipo, setTipo] = useState(''); // Começa vazio
+    const [tipo, setTipo] = useState('');
     const [descricao, setDescricao] = useState('');
-    const [carregandoIA, setCarregandoIA] = useState(false); // Para o efeito de carregamento
+    const [carregandoIA, setCarregandoIA] = useState(false);
 
     useEffect(() => {
         api.get('/alunos').then(res => setAlunos(res.data));

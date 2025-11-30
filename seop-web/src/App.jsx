@@ -6,13 +6,15 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import NovaOcorrencia from './pages/NovaOcorrencia';
 import Desempenho from './pages/Desempenho';
+import Chamada from './pages/Chamada';
+import VisualizarFrequencia from './pages/VisualizarFrequencia';
+import VisualizarBoletim from './pages/VisualizarBoletim';
 
-// Componente que protege as rotas (O Porteiro)
 function PrivateRoute({ children }) {
     const { signed, loading } = useContext(AuthContext);
 
     if (loading) {
-        return <div>Carregando...</div>;
+        return <div style={{padding: '20px', textAlign: 'center'}}>Carregando sistema...</div>;
     }
 
     if (!signed) {
@@ -27,13 +29,15 @@ function App() {
         <AuthProvider>
             <BrowserRouter>
                 <Routes>
-                    {/* Rota Pública */}
                     <Route path="/login" element={<Login />} />
 
-                    {/* Rotas Privadas (Protegidas) */}
                     <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
                     <Route path="/nova-ocorrencia" element={<PrivateRoute><NovaOcorrencia /></PrivateRoute>} />
                     <Route path="/desempenho" element={<PrivateRoute><Desempenho /></PrivateRoute>} />
+                    <Route path="/chamada" element={<PrivateRoute><Chamada /></PrivateRoute>} />
+
+                    <Route path="/frequencia/aluno/:alunoId" element={<PrivateRoute><VisualizarFrequencia /></PrivateRoute>} />
+                    <Route path="/boletim/aluno/:alunoId" element={<PrivateRoute><VisualizarBoletim /></PrivateRoute>} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>

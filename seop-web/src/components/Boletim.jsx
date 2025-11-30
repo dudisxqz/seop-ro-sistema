@@ -2,13 +2,8 @@ import React from 'react';
 
 export const Boletim = React.forwardRef(({ aluno, notas, relatorioIA }, ref) => {
 
-    // PREVENÇÃO DE ERROS: Se não tiver aluno, usa dados vazios em vez de retornar null
     const dadosAluno = aluno || { nome: "", matricula: "", turma: "", id: 0 };
-
-    // Lista de matérias para a estrutura fixa
     const materias = ["PORTUGUES", "MATEMATICA", "HISTORIA", "GEOGRAFIA", "CIENCIAS", "INGLES", "EDUCACAO_FISICA", "ARTE"];
-
-    // Funções auxiliares seguras (verificam se 'notas' existe)
     const safeNotas = notas || [];
 
     const getNota = (materia, bim) => {
@@ -29,10 +24,8 @@ export const Boletim = React.forwardRef(({ aluno, notas, relatorioIA }, ref) => 
     };
 
     return (
-        // A DIV com a ref AGORA SEMPRE EXISTE, garantindo que a impressão funcione
         <div ref={ref} style={styles.page}>
 
-            {/* CABEÇALHO */}
             <div style={styles.header}>
                 <div style={{fontSize:'10px', fontWeight:'bold', textTransform:'uppercase'}}>Secretaria de Estado da Educação</div>
                 <h1 style={{margin: '5px 0', fontSize: '16px', color: '#003366', textTransform:'uppercase'}}>Governo do Estado de Rondônia</h1>
@@ -41,7 +34,6 @@ export const Boletim = React.forwardRef(({ aluno, notas, relatorioIA }, ref) => 
                 </div>
             </div>
 
-            {/* DADOS DO ALUNO */}
             <div style={styles.infoBox}>
                 <div style={styles.row}>
                     <div style={styles.col}><strong>Escola:</strong> EEEM MAJOR GUAPINDAIA</div>
@@ -61,7 +53,6 @@ export const Boletim = React.forwardRef(({ aluno, notas, relatorioIA }, ref) => 
                 </div>
             </div>
 
-            {/* TABELA DE NOTAS */}
             <table style={styles.table}>
                 <thead>
                 <tr style={{background: '#f0f0f0'}}>
@@ -103,14 +94,12 @@ export const Boletim = React.forwardRef(({ aluno, notas, relatorioIA }, ref) => 
                 </tbody>
             </table>
 
-            {/* RODAPÉ STATUS */}
             <div style={{marginTop:'10px', border:'1px solid #999', padding:'5px', display:'flex', justifyContent:'space-between', fontSize:'11px', fontWeight:'bold'}}>
                 <div>Situação da Turma: FECHADA</div>
                 <div>Total Faltas: 0</div>
                 <div>Situação do Estudante: <span style={{color:'green'}}>CURSANDO</span></div>
             </div>
 
-            {/* PARECER DA IA */}
             {relatorioIA && (
                 <div style={{marginTop: '30px', borderTop:'2px dashed #ccc', paddingTop:'20px'}}>
                     <h4 style={{margin:0, fontSize:'14px', textTransform:'uppercase'}}>Observações Pedagógicas (IA)</h4>

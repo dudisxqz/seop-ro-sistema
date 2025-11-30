@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.seopro.api.auth.model.Usuario; // Import atualizado
+import com.seopro.api.auth.model.Usuario;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -14,7 +14,7 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
-    private String secret = "seop-segredo-123"; // Em produção, use application.properties
+    private String secret = "seop-segredo-123";
 
     public String gerarToken(Usuario usuario) {
         try {
@@ -22,7 +22,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("SEOP-API")
                     .withSubject(usuario.getLogin())
-                    .withClaim("id", usuario.getId()) // Guardamos o ID no token tbm
+                    .withClaim("id", usuario.getId())
                     .withExpiresAt(dataExpiracao())
                     .sign(algoritmo);
         } catch (JWTCreationException exception) {

@@ -1,7 +1,7 @@
 package com.seopro.api.academico.repository;
 
 import com.seopro.api.academico.model.Nota;
-import com.seopro.api.aluno.model.Aluno; // Importante importar o Aluno
+import com.seopro.api.aluno.model.Aluno;
 import com.seopro.api.aluno.model.Materia;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

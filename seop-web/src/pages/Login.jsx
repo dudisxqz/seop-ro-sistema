@@ -18,7 +18,6 @@ function Login() {
         }
     }
 
-    // Se já estiver logado, manda pro Dashboard
     if (signed) {
         return <Navigate to="/" />;
     }

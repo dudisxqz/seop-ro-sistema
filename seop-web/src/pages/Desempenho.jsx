@@ -96,7 +96,6 @@ function Desempenho() {
         }
       `}</style>
 
-            {/* --- CONTEÚDO DO SITE (Visível na tela) --- */}
             <div className="no-print" style={{ padding: '20px', maxWidth: '1000px', margin: '0 auto' }}>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
@@ -105,7 +104,6 @@ function Desempenho() {
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                    {/* Card Esquerda */}
                     <div style={styles.card}>
                         <h3 style={styles.cardTitle}>Lançar Nota</h3>
                         <form onSubmit={handleLancarNota} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
@@ -122,7 +120,6 @@ function Desempenho() {
                         </form>
                     </div>
 
-                    {/* Card Direita */}
                     <div style={styles.card}>
                         <h3 style={styles.cardTitle}>Gráfico</h3>
                         {alunoId ? (
@@ -133,7 +130,6 @@ function Desempenho() {
                     </div>
                 </div>
 
-                {/* Rodapé IA e Impressão */}
                 <div style={{ marginTop: '30px', background: 'white', padding: '25px', borderRadius: '10px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <h3 style={{ margin: 0, color: '#003366' }}>🤖 Parecer IA</h3>
@@ -143,7 +139,6 @@ function Desempenho() {
                                 {loadingRelatorio ? 'Analisando...' : '📄 Gerar Parecer'}
                             </button>
 
-                            {/* BOTÃO AGORA FORA DA CONDIÇÃO (Sempre visível se tiver aluno) */}
                             <button
                                 onClick={handlePrint}
                                 disabled={!alunoId}
@@ -161,8 +156,6 @@ function Desempenho() {
                 </div>
             </div>
 
-            {/* --- BOLETIM (ESCONDIDO NA TELA / VISÍVEL NA IMPRESSÃO) --- */}
-            {/* O style inline aqui esconde da tela normal, mas o @media print lá em cima resgata ele com !important */}
             <div id="area-do-boletim" style={{ position: 'absolute', top: '-9999px', left: '-9999px' }}>
                 <Boletim
                     aluno={objAlunoSelecionado}

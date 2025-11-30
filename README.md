@@ -1,63 +1,44 @@
-# 🏫 SEOP-RO — Sistema Escolar de Ocorrências e Pedagogia
+# 🏫 EduSync (SEOP) — Sistema de Gestão Escolar Inteligente
 
-> Sistema Full Stack para gestão de ocorrências escolares, visando facilitar a comunicação entre professores e coordenação pedagógica.
+> Plataforma Full Stack para gestão pedagógica, integrando notas, ocorrências e inteligência artificial para auxiliar na tomada de decisão escolar.
 
-![Status](https://img.shields.io/badge/Status-Concluído-success)
-![Java](https://img.shields.io/badge/Java-24-orange)
-![Spring Boot](https://img.shields.io/badge/Spring-Boot-green)
-![React](https://img.shields.io/badge/React-Vite-blue)
+![Java](https://img.shields.io/badge/Backend-Java_17%2F24-orange)
+![Spring Boot](https://img.shields.io/badge/Framework-Spring_Boot_3-green)
+![React](https://img.shields.io/badge/Frontend-React_Vite-blue)
+![Docker](https://img.shields.io/badge/Infra-Docker_Compose-2496ED)
+![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791)
+![OpenAI](https://img.shields.io/badge/AI-OpenAI_GPT-412991)
 
-## 🎯 O Problema
-Escolas públicas muitas vezes dependem de registros em papel para ocorrências disciplinares (atrasos, comportamento, tarefas). Isso dificulta a geração de histórico e a tomada de decisão pedagógica.
-
-## 💡 A Solução
-O **SEOP-RO** digitaliza esse processo. O professor seleciona o aluno, e o sistema já identifica a turma automaticamente. O registro é salvo em banco de dados e exibido em um Dashboard em tempo real para a coordenação.
+## 🎯 O Diferencial
+Diferente de sistemas comuns, o EduSync utiliza **IA Generativa** para analisar o desempenho acadêmico e comportamental do aluno, gerando pareceres pedagógicos automáticos e gráficos comparativos de turma em tempo real.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Stack Tecnológica
 
 ### Backend (API)
-- **Java 24** (Versão atualizada)
-- **Spring Boot 3** (Framework principal)
-- **Spring Data JPA** (Persistência de dados)
-- **H2 Database** (Banco em memória para testes rápidos)
-- **DTO Pattern** (Data Transfer Object com Java Records)
-- **Architecture:** Package by Feature (Organização por domínio: Aluno/Ocorrência)
+- **Spring Security + JWT:** Autenticação e Autorização (RBAC - Role Based Access Control).
+- **Spring Data JPA:** Persistência de dados.
+- **Docker + PostgreSQL:** Banco de dados containerizado para fácil deploy.
+- **OpenAI API:** Integração para análise de dados e geração de textos.
+- **Architecture:** Package by Feature (Organização por domínio).
 
-### Frontend (Interface)
-- **React.js** com **Vite** (Build otimizado)
-- **Axios** (Integração com API REST)
-- **React Router DOM** (Navegação SPA)
-- **CSS Modules** (Visual limpo e corporativo)
+### Frontend (Web)
+- **React.js + Vite:** Interface rápida e responsiva.
+- **Context API:** Gerenciamento de estado global de autenticação.
+- **Recharts:** Visualização de dados (Gráficos de desempenho).
+- **CSS Modules + Native Print:** Geração de boletins em PDF fiéis ao modelo oficial.
 
 ---
 
 ## 🚀 Como rodar o projeto
 
-Este é um mono-repo contendo Backend e Frontend. Você precisará de dois terminais.
+### Pré-requisitos
+- Docker Desktop instalado e rodando.
+- Node.js instalado.
+- Java JDK 17 ou superior.
 
-### 1️⃣ Passo 1: Backend (API)
-1. Abra a pasta raiz do projeto no **IntelliJ IDEA**.
-2. Aguarde o Maven baixar todas as dependências do Java.
-3. Localize a classe `src/main/java/com/seopro/api/SeopApplication.java`.
-4. Clique no botão **Run** (▶️).
-5. O Backend iniciará na porta `8080`.
-   * *O sistema popula o banco automaticamente com 3 alunos fictícios.*
-
-### 2️⃣ Passo 2: Frontend (Web)
-Para rodar a interface, é necessário ter o **Node.js** instalado.
-
-1. Abra um terminal e entre na pasta do frontend:
-   ```bash
-   cd seop-web
-
-2. Instale as dependências do projeto:
-   ```bash
-   npm install
-   
-3. Inicie o servidor de desenvolvimento:
-   ```bash
-   npm run dev
-
-4. O terminal mostrará o link de acesso (geralmente http://localhost:5173 ); Clique nele para abrir o sistema.
+### 1️⃣ Subindo a Infraestrutura (Banco de Dados)
+Na raiz do projeto, execute:
+```bash
+docker-compose up -d

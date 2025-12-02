@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import {
     LayoutDashboard, CalendarDays, BarChart3, PlusCircle, BookOpen,
-    Calendar, UserPlus, LogOut, Megaphone, CreditCard
+    Calendar, UserPlus, LogOut, Megaphone, CreditCard, FileText
 } from 'lucide-react';
 
 export function Sidebar() {
@@ -37,28 +37,20 @@ export function Sidebar() {
                 <span className="text-xl font-bold tracking-wider text-slate-100">EduSync</span>
             </div>
 
-            {/* MENU */}
+            {/* MENU SCROLLÁVEL */}
             <nav className="flex-1 py-6 overflow-y-auto space-y-1 custom-scrollbar">
                 <div className="px-6 mb-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Principal</div>
-                {/* eslint-disable-next-line react-hooks/static-components */}
                 <LinkItem to="/" icon={LayoutDashboard} label="Visão Geral" />
-                {/* eslint-disable-next-line react-hooks/static-components */}
                 <LinkItem to="/avisos" icon={Megaphone} label="Mural de Avisos" />
 
                 {isStaff && (
                     <>
                         <div className="px-6 mt-8 mb-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Gestão</div>
-                        {/* eslint-disable-next-line react-hooks/static-components */}
                         {isAdmin && <LinkItem to="/matricula" icon={UserPlus} label="Matrícula" />}
-                        {/* eslint-disable-next-line react-hooks/static-components */}
-                        <LinkItem to="/chamada" icon={CalendarDays} label="Chamada Online" />
-                        {/* eslint-disable-next-line react-hooks/static-components */}
-                        <LinkItem to="/desempenho" icon={BarChart3} label="Lançar Notas" />
-                        {/* eslint-disable-next-line react-hooks/static-components */}
-                        <LinkItem to="/tarefas" icon={BookOpen} label="Gestão de Tarefas" />
-                        {/* eslint-disable-next-line react-hooks/static-components */}
                         <LinkItem to="/grade" icon={Calendar} label="Grade Horária" />
-                        {/* eslint-disable-next-line react-hooks/static-components */}
+                        <LinkItem to="/tarefas" icon={BookOpen} label="Tarefas & AVA" />
+                        <LinkItem to="/chamada" icon={CalendarDays} label="Chamada Online" />
+                        <LinkItem to="/desempenho" icon={BarChart3} label="Lançar Notas" />
                         <LinkItem to="/nova-ocorrencia" icon={PlusCircle} label="Ocorrência" />
                     </>
                 )}
@@ -66,25 +58,24 @@ export function Sidebar() {
                 {isParent && (
                     <>
                         <div className="px-6 mt-8 mb-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Aluno</div>
-                        {/* eslint-disable-next-line react-hooks/static-components */}
                         <LinkItem to="/tarefas" icon={BookOpen} label="Minhas Tarefas" />
-                        {/* eslint-disable-next-line react-hooks/static-components */}
                         <LinkItem to="/minha-carteirinha" icon={CreditCard} label="Carteirinha Digital" />
                     </>
                 )}
             </nav>
 
-            {/* RODAPÉ USER (Clicável agora) */}
+            {/* RODAPÉ USER (CLICÁVEL - LEVA AO PERFIL) */}
             <div className="p-6 border-t border-slate-800 bg-[#020617]">
 
-                {/* Link para o Perfil */}
-                <Link to="/perfil" className="flex items-center gap-3 mb-4 p-2 -mx-2 rounded-lg hover:bg-white/5 transition group cursor-pointer">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center font-bold text-sm shadow-lg border-2 border-slate-800 group-hover:border-blue-400 transition">
+                <Link to="/perfil" className="flex items-center gap-3 mb-4 p-2 -mx-2 rounded-lg hover:bg-white/5 transition group cursor-pointer" title="Editar Perfil">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center font-bold text-sm shadow-lg border-2 border-slate-800 group-hover:border-blue-500 transition">
                         {user?.login?.substring(0,2).toUpperCase()}
                     </div>
                     <div className="overflow-hidden">
-                        <p className="text-sm font-bold truncate text-slate-200 group-hover:text-white">{user?.login}</p>
-                        <p className="text-[10px] text-slate-500 truncate uppercase font-bold tracking-wider">Meu Perfil</p>
+                        <p className="text-sm font-bold truncate text-slate-200 group-hover:text-white transition">{user?.login}</p>
+                        <p className="text-[10px] text-slate-500 truncate uppercase font-bold tracking-wider flex items-center gap-1">
+                            {user?.role} <span className="text-blue-500 text-[8px]">●</span>
+                        </p>
                     </div>
                 </Link>
 

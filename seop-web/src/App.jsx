@@ -3,7 +3,7 @@ import { AuthProvider, AuthContext } from './contexts/AuthContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { useContext } from 'react';
 
-// IMPORTS DAS PÁGINAS
+// IMPORTS
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import NovaOcorrencia from './pages/NovaOcorrencia';
@@ -18,25 +18,14 @@ import GradeHoraria from './pages/GradeHoraria';
 import Matricula from './pages/Matricula';
 import Avisos from './pages/Avisos';
 import MinhaCarteirinha from './pages/MinhaCarteirinha';
+import MeusDocumentos from './pages/MeusDocumentos'; // NOVO
+import MinhasTarefas from './pages/MinhasTarefas';   // NOVO
 import Perfil from './pages/Perfil';
 
-// O Porteiro (Rota Privada)
 function PrivateRoute({ children }) {
     const { signed, loading } = useContext(AuthContext);
-
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center min-h-screen bg-gray-100">
-                <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-primary-dark"></div>
-            </div>
-        );
-    }
-
-    if (!signed) {
-        return <Navigate to="/login" />;
-    }
-
-    return children;
+    if (loading) return <div className="flex h-screen items-center justify-center">Carregando...</div>;
+    return signed ? children : <Navigate to="/login" />;
 }
 
 function App() {
@@ -45,24 +34,25 @@ function App() {
             <AuthProvider>
                 <BrowserRouter>
                     <Routes>
-                        {/* Rota Pública */}
                         <Route path="/login" element={<Login />} />
-
-                        {/* Rotas Privadas Gerais */}
                         <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
                         <Route path="/avisos" element={<PrivateRoute><Avisos /></PrivateRoute>} />
-                        <Route path="/minha-carteirinha" element={<PrivateRoute><MinhaCarteirinha /></PrivateRoute>} /> {/* <--- ROTA NOVA */}
+                        <Route path="/perfil" element={<PrivateRoute><Perfil /></PrivateRoute>} />
 
-                        {/* Rotas de Gestão (Staff) */}
+                        {/* Rotas para Pais/Alunos */}
+                        <Route path="/minha-carteirinha" element={<PrivateRoute><MinhaCarteirinha /></PrivateRoute>} />
+                        <Route path="/meus-documentos" element={<PrivateRoute><MeusDocumentos /></PrivateRoute>} />
+                        <Route path="/minhas-tarefas" element={<PrivateRoute><MinhasTarefas /></PrivateRoute>} />
+
+                        {/* Rotas de Gestão */}
                         <Route path="/matricula" element={<PrivateRoute><Matricula /></PrivateRoute>} />
                         <Route path="/grade" element={<PrivateRoute><GradeHoraria /></PrivateRoute>} />
                         <Route path="/tarefas" element={<PrivateRoute><Tarefas /></PrivateRoute>} />
                         <Route path="/chamada" element={<PrivateRoute><Chamada /></PrivateRoute>} />
                         <Route path="/desempenho" element={<PrivateRoute><Desempenho /></PrivateRoute>} />
                         <Route path="/nova-ocorrencia" element={<PrivateRoute><NovaOcorrencia /></PrivateRoute>} />
-                        <Route path="/perfil" element={<PrivateRoute><Perfil /></PrivateRoute>} />
 
-                        {/* Rotas de Visualização Específicas (Com ID do Aluno) */}
+                        {/* Visualizações */}
                         <Route path="/tarefas/aluno/:alunoId" element={<PrivateRoute><VisualizarTarefas /></PrivateRoute>} />
                         <Route path="/frequencia/aluno/:alunoId" element={<PrivateRoute><VisualizarFrequencia /></PrivateRoute>} />
                         <Route path="/boletim/aluno/:alunoId" element={<PrivateRoute><VisualizarBoletim /></PrivateRoute>} />

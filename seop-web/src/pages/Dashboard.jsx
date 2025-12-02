@@ -5,10 +5,10 @@ import { AuthContext } from '../contexts/AuthContext';
 import { Sidebar } from '../components/Sidebar';
 import {
     Users, AlertTriangle, TrendingUp, Search, BookOpen,
-    CalendarDays, FileText, GraduationCap, FileWarning, FileSignature, UserPlus, Calendar, BarChart3
+    CalendarDays, FileText, GraduationCap, FileWarning, FileSignature, UserPlus, Calendar, Megaphone, CreditCard, Clock
 } from 'lucide-react';
 
-// --- COMPONENTE: CARD DE INDICADORES (KPI) ---
+// --- COMPONENTE: CARD KPI ---
 const KPICard = ({ title, value, desc, color, icon: Icon }) => {
     const styles = {
         blue: { border: 'border-blue-600', text: 'text-blue-600', bg: 'bg-blue-50' },
@@ -32,60 +32,39 @@ const KPICard = ({ title, value, desc, color, icon: Icon }) => {
 };
 
 // --- COMPONENTE: LINHA DO ALUNO ---
-const LinhaAluno = ({ aluno }) => {
-    if (!aluno) return null;
-    return (
-        <li className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition duration-150">
-            <div className="p-4">
-                <div className="flex items-start gap-3 mb-3">
-                    <div className="p-2 bg-blue-50 text-blue-600 rounded-full shrink-0">
-                        <GraduationCap size={18} />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                        <div className="font-bold text-gray-800 text-sm truncate">{aluno.nome}</div>
-                        <div className="text-xs text-gray-500 mt-0.5 flex flex-wrap items-center gap-2">
-                            <span className="bg-gray-100 px-1.5 py-0.5 rounded text-gray-600 font-medium whitespace-nowrap">{aluno.turma}</span>
-                            <span className="text-gray-300">|</span>
-                            <span className="truncate">Mat: {aluno.matricula}</span>
-                        </div>
-                    </div>
+const LinhaAluno = ({ aluno }) => (
+    <li className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition duration-150">
+        <div className="p-4">
+            <div className="flex items-start gap-3 mb-3">
+                <div className="p-2 bg-blue-50 text-blue-600 rounded-full shrink-0">
+                    <GraduationCap size={18} />
                 </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    <Link to={`/boletim/aluno/${aluno.id}`}>
-                        <button className="w-full flex justify-center items-center py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold rounded shadow-sm transition active:scale-95 gap-1 uppercase tracking-wide h-full">
-                            <FileText size={12} /> <span>Boletim</span>
-                        </button>
-                    </Link>
-
-                    <Link to={`/frequencia/aluno/${aluno.id}`}>
-                        <button className="w-full flex justify-center items-center py-1.5 bg-secondary-green hover:bg-green-700 text-white text-[10px] font-bold rounded shadow-sm transition active:scale-95 gap-1 uppercase tracking-wide h-full">
-                            <CalendarDays size={12} /> <span>Freq.</span>
-                        </button>
-                    </Link>
-
-                    <Link to={`/declaracao/aluno/${aluno.id}`}>
-                        <button className="w-full flex justify-center items-center py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-[10px] font-bold rounded shadow-sm transition active:scale-95 gap-1 uppercase tracking-wide h-full">
-                            <FileSignature size={12} /> <span>Declar.</span>
-                        </button>
-                    </Link>
-
-                    <Link to={`/tarefas/aluno/${aluno.id}`}>
-                        <button className="w-full flex justify-center items-center py-1.5 bg-yellow-500 hover:bg-yellow-600 text-white text-[10px] font-bold rounded shadow-sm transition active:scale-95 gap-1 uppercase tracking-wide h-full">
-                            <BookOpen size={12} /> <span>Tarefas</span>
-                        </button>
-                    </Link>
+                <div className="min-w-0 flex-1">
+                    <div className="font-bold text-gray-800 text-sm truncate">{aluno.nome}</div>
+                    <div className="text-xs text-gray-500 mt-0.5 flex flex-wrap items-center gap-2">
+                        <span className="bg-gray-100 px-1.5 py-0.5 rounded text-gray-600 font-medium whitespace-nowrap">{aluno.turma}</span>
+                        <span className="text-gray-300">|</span>
+                        <span className="truncate">Mat: {aluno.matricula}</span>
+                    </div>
                 </div>
             </div>
-        </li>
-    );
-};
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <Link to={`/boletim/aluno/${aluno.id}`}><button className="w-full flex justify-center items-center py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold rounded shadow-sm transition active:scale-95 gap-1 uppercase tracking-wide h-full"><FileText size={12}/><span>Boletim</span></button></Link>
+                <Link to={`/frequencia/aluno/${aluno.id}`}><button className="w-full flex justify-center items-center py-1.5 bg-secondary-green hover:bg-green-700 text-white text-[10px] font-bold rounded shadow-sm transition active:scale-95 gap-1 uppercase tracking-wide h-full"><CalendarDays size={12}/><span>Freq.</span></button></Link>
+                <Link to={`/declaracao/aluno/${aluno.id}`}><button className="w-full flex justify-center items-center py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-[10px] font-bold rounded shadow-sm transition active:scale-95 gap-1 uppercase tracking-wide h-full"><FileSignature size={12}/><span>Declar.</span></button></Link>
+                <Link to={`/tarefas/aluno/${aluno.id}`}><button className="w-full flex justify-center items-center py-1.5 bg-yellow-500 hover:bg-yellow-600 text-white text-[10px] font-bold rounded shadow-sm transition active:scale-95 gap-1 uppercase tracking-wide h-full"><BookOpen size={12}/><span>Tarefas</span></button></Link>
+            </div>
+        </div>
+    </li>
+);
 
 function Dashboard() {
     const { user, signOut } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [alunos, setAlunos] = useState([]);
     const [ocorrencias, setOcorrencias] = useState([]);
     const [notas, setNotas] = useState([]);
+    const [avisos, setAvisos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [abaAtiva, setAbaAtiva] = useState('pesquisa');
     const [busca, setBusca] = useState('');
@@ -94,52 +73,124 @@ function Dashboard() {
     useEffect(() => {
         async function carregarDados() {
             try {
-                const [respAlunos, respOcorrencias, respNotas] = await Promise.all([
+                const [respAlunos, respOcorrencias, respNotas, respAvisos] = await Promise.all([
                     api.get('/alunos'),
                     api.get('/ocorrencias'),
-                    api.get('/notas')
+                    api.get('/notas'),
+                    api.get('/avisos')
                 ]);
                 setAlunos(respAlunos.data || []);
                 setOcorrencias(respOcorrencias.data || []);
                 setNotas(respNotas.data || []);
-            } catch (erro) {
-                console.error("Erro ao carregar dados:", erro);
-            } finally {
-                setLoading(false);
-            }
+                setAvisos(respAvisos.data || []);
+            } catch (erro) { console.error(erro); } finally { setLoading(false); }
         }
         carregarDados();
     }, []);
 
-    const role = user?.role;
-    const isStaff = ['ADMIN', 'COORDENADOR', 'SECRETARIA', 'PROFESSOR'].includes(role);
-    const isParent = ['RESPONSAVEL', 'ALUNO'].includes(role);
+    const isStaff = ['ADMIN', 'COORDENADOR', 'SECRETARIA', 'PROFESSOR'].includes(user?.role);
+    const isAdmin = user?.role === 'ADMIN' || user?.role === 'SECRETARIA';
+    const isParent = user?.role === 'RESPONSAVEL';
+    const isStudent = user?.role === 'ALUNO'; // Nova flag para aluno
 
+    // --- LÓGICA DO ALUNO ---
+    // Encontra os dados do aluno logado (Simulação: pega o primeiro que achar com nome parecido ou ID)
+    // Em produção, o backend retornaria /meus-dados
+    const dadosAlunoLogado = isStudent ? alunos.find(a => a.nome.toLowerCase().includes("joão") || a.nome.toLowerCase().includes(user.login.toLowerCase())) : null;
+
+    // --- KPIs e Filtros ---
     const totalAlunos = alunos.length;
     const hoje = new Date().toISOString().split('T')[0];
     const ocorrenciasHoje = ocorrencias.filter(o => o.dataCriacao && o.dataCriacao.startsWith(hoje)).length;
     const mediaGeral = notas.length > 0 ? (notas.reduce((acc, n) => acc + (Number(n.valor) || 0), 0) / notas.length).toFixed(1) : "0.0";
 
-    // Definição de 'meusFilhos' ANTES de usar
-    const meusFilhos = alunos.filter(a => a.nome.includes("João Silva") || a.nome.includes("Maria Oliveira"));
-    const alunosVisiveis = isStaff ? alunos : meusFilhos;
+    const alunosVisiveis = isStaff ? alunos : alunos.filter(a => a.nome.includes("João Silva") || a.nome.includes("Maria Oliveira"));
     const alunosFiltrados = alunosVisiveis.filter(aluno => aluno.nome && aluno.nome.toLowerCase().includes(busca.toLowerCase()));
-
     const turmasAgrupadas = alunosVisiveis.reduce((grupo, aluno) => {
         const turma = aluno.turma || "Sem Turma";
         if (!grupo[turma]) grupo[turma] = [];
         grupo[turma].push(aluno);
         return grupo;
     }, {});
-
     const listaDeTurmas = Object.keys(turmasAgrupadas).sort();
 
-    if (loading) return <div className="h-screen flex items-center justify-center bg-gray-50 text-gray-500">Carregando...</div>;
+    if (loading) return <div className="flex h-screen items-center justify-center bg-gray-50 text-gray-500">Carregando...</div>;
 
+    // --- DASHBOARD EXCLUSIVO DO ALUNO ---
+    if (isStudent && dadosAlunoLogado) {
+        return (
+            <div className="flex h-screen bg-gray-50 font-sans">
+                <Sidebar />
+                <div className="flex-1 md:ml-64 p-8 overflow-y-auto h-full">
+                    {/* Header do Aluno */}
+                    <header className="mb-8 bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex justify-between items-center">
+                        <div>
+                            <h1 className="text-2xl font-black text-gray-800">Olá, {dadosAlunoLogado.nome.split(' ')[0]}! 👋</h1>
+                            <p className="text-gray-500 mt-1 text-sm">{dadosAlunoLogado.turma} • Matrícula: {dadosAlunoLogado.matricula}</p>
+                        </div>
+                        <div className="hidden md:block text-right">
+                            <p className="text-xs font-bold text-gray-400 uppercase">Status</p>
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700">
+                           ● MATRICULADO
+                        </span>
+                        </div>
+                    </header>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                        {/* ACESSO RÁPIDO (Esquerda) */}
+                        <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <Link to={`/boletim/aluno/${dadosAlunoLogado.id}`} className="bg-blue-600 hover:bg-blue-700 text-white p-6 rounded-xl shadow-md transition flex flex-col items-center justify-center gap-3 group">
+                                <div className="p-3 bg-white/20 rounded-full group-hover:scale-110 transition"><FileText size={32}/></div>
+                                <span className="font-bold text-lg">Boletim Escolar</span>
+                            </Link>
+
+                            <Link to={`/tarefas/aluno/${dadosAlunoLogado.id}`} className="bg-yellow-500 hover:bg-yellow-600 text-white p-6 rounded-xl shadow-md transition flex flex-col items-center justify-center gap-3 group">
+                                <div className="p-3 bg-white/20 rounded-full group-hover:scale-110 transition"><BookOpen size={32}/></div>
+                                <span className="font-bold text-lg">Minhas Tarefas</span>
+                            </Link>
+
+                            <Link to={`/frequencia/aluno/${dadosAlunoLogado.id}`} className="bg-green-600 hover:bg-green-700 text-white p-6 rounded-xl shadow-md transition flex flex-col items-center justify-center gap-3 group">
+                                <div className="p-3 bg-white/20 rounded-full group-hover:scale-110 transition"><CalendarDays size={32}/></div>
+                                <span className="font-bold text-lg">Frequência</span>
+                            </Link>
+
+                            <Link to="/minha-carteirinha" className="bg-indigo-600 hover:bg-indigo-700 text-white p-6 rounded-xl shadow-md transition flex flex-col items-center justify-center gap-3 group">
+                                <div className="p-3 bg-white/20 rounded-full group-hover:scale-110 transition"><CreditCard size={32}/></div>
+                                <span className="font-bold text-lg">Carteirinha Digital</span>
+                            </Link>
+                        </div>
+
+                        {/* MURAL E NOTIFICAÇÕES (Direita) */}
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col h-full">
+                            <h3 className="font-bold text-gray-700 mb-4 flex items-center gap-2"><Megaphone size={20} className="text-orange-500"/> Mural de Avisos</h3>
+                            <div className="flex-1 overflow-y-auto space-y-4 custom-scrollbar max-h-[400px]">
+                                {avisos.length === 0 ? (
+                                    <p className="text-gray-400 text-sm text-center py-10">Sem novos avisos.</p>
+                                ) : (
+                                    avisos.map(aviso => (
+                                        <div key={aviso.id} className="p-3 bg-orange-50 border-l-4 border-orange-400 rounded-r-lg">
+                                            <h4 className="font-bold text-sm text-gray-800">{aviso.titulo}</h4>
+                                            <p className="text-xs text-gray-600 mt-1 line-clamp-3">{aviso.mensagem}</p>
+                                            <span className="text-[10px] text-gray-400 mt-2 block">{new Date(aviso.dataPostagem).toLocaleDateString()}</span>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // --- DASHBOARD PADRÃO (Diretor, Staff, Pais) ---
     return (
         <div className="flex h-screen bg-gray-50 font-sans">
             <Sidebar />
             <div className="flex-1 md:ml-64 p-8 overflow-y-auto h-full">
+
                 <header className="mb-8 flex justify-between items-end">
                     <div>
                         <h1 className="text-3xl font-black text-gray-800 tracking-tight">Visão Geral</h1>
@@ -156,16 +207,14 @@ function Dashboard() {
                 )}
 
                 <div className={`grid gap-8 ${isStaff ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1 max-w-4xl mx-auto'}`}>
+
+                    {/* LISTA DE ALUNOS / FILHOS */}
                     <div className={`bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col h-[600px] ${isStaff ? 'lg:col-span-1' : 'col-span-3 lg:col-span-2'}`}>
 
                         {isStaff ? (
                             <div className="flex border-b border-gray-100 shrink-0">
-                                <button onClick={() => setAbaAtiva('pesquisa')} className={`flex-1 py-4 text-center text-xs font-bold uppercase tracking-wide transition ${abaAtiva === 'pesquisa' ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50/30' : 'text-gray-400 hover:text-gray-600'}`}>
-                                    Pesquisa
-                                </button>
-                                <button onClick={() => setAbaAtiva('turmas')} className={`flex-1 py-4 text-center text-xs font-bold uppercase tracking-wide transition ${abaAtiva === 'turmas' ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50/30' : 'text-gray-400 hover:text-gray-600'}`}>
-                                    Turmas
-                                </button>
+                                <button onClick={() => setAbaAtiva('pesquisa')} className={`flex-1 py-4 text-center text-xs font-bold uppercase tracking-wide transition ${abaAtiva === 'pesquisa' ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50/30' : 'text-gray-400 hover:text-gray-600'}`}>Pesquisa</button>
+                                <button onClick={() => setAbaAtiva('turmas')} className={`flex-1 py-4 text-center text-xs font-bold uppercase tracking-wide transition ${abaAtiva === 'turmas' ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50/30' : 'text-gray-400 hover:text-gray-600'}`}>Turmas</button>
                             </div>
                         ) : (
                             <div className="p-5 border-b border-gray-100 bg-gray-50 flex items-center gap-3 shrink-0">
@@ -238,4 +287,5 @@ function Dashboard() {
         </div>
     );
 }
+
 export default Dashboard;

@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import {
     LayoutDashboard, CalendarDays, BarChart3, PlusCircle, BookOpen,
-    Calendar, UserPlus, LogOut, Megaphone, CreditCard, FileSignature, UserCog
+    Calendar, UserPlus, LogOut, Megaphone, CreditCard, FileText, FileSignature, UserCog, Settings
 } from 'lucide-react';
 
 export function Sidebar() {
@@ -11,14 +11,11 @@ export function Sidebar() {
     const location = useLocation();
 
     const role = user?.role;
-
-    // Perfis
-    const isStaff = ['ADMIN', 'COORDENADOR', 'SECRETARIA', 'PROFESSOR'].includes(role);
-    const isAdmin = ['ADMIN', 'SECRETARIA'].includes(role); // Podem matricular
-    const isSecretaria = ['ADMIN', 'SECRETARIA'].includes(role); // Podem emitir documentos
+    const isStaff = ['ADMIN', 'SECRETARIA', 'PROFESSOR'].includes(role);
+    const isAdmin = role === 'ADMIN'; // Só ADMIN vê configurações
+    const isSecretaria = ['ADMIN', 'SECRETARIA'].includes(role);
     const isParent = ['RESPONSAVEL', 'ALUNO'].includes(role);
 
-    // Formata nome do cargo
     const getRoleName = (r) => {
         if (r === 'ADMIN') return 'Coordenação';
         if (r === 'SECRETARIA') return 'Secretaria';
@@ -42,7 +39,6 @@ export function Sidebar() {
     return (
         <aside className="w-64 bg-[#0f172a] text-white flex-shrink-0 hidden md:flex flex-col h-screen fixed left-0 top-0 shadow-2xl z-50 font-sans">
 
-            {/* LOGO */}
             <div className="h-20 flex items-center px-8 border-b border-slate-800 bg-[#020617]">
                 <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3 shadow-lg shadow-blue-900/20">
                     <LayoutDashboard className="text-white" size={18} />
@@ -50,7 +46,6 @@ export function Sidebar() {
                 <span className="text-xl font-bold tracking-wider text-slate-100">EduSync</span>
             </div>
 
-            {/* MENU SCROLLÁVEL */}
             <nav className="flex-1 py-6 overflow-y-auto space-y-1 custom-scrollbar">
                 <div className="px-6 mb-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Principal</div>
                 <LinkItem to="/" icon={LayoutDashboard} label="Visão Geral" />
@@ -61,15 +56,15 @@ export function Sidebar() {
                         <div className="px-6 mt-8 mb-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Gestão</div>
 
                         {isAdmin && <LinkItem to="/matricula" icon={UserPlus} label="Nova Matrícula" />}
+                        {isSecretaria && <LinkItem to="/meus-documentos" icon={FileSignature} label="Emissão de Declaração" />}
 
-                        {/* Botão específico para secretaria */}
-                        {isSecretaria && <LinkItem to="/meus-documentos" icon={FileSignature} label="Emissão de Docs" />}
-
-                        <LinkItem to="/grade" icon={Calendar} label="Grade Horária" />
                         <LinkItem to="/chamada" icon={CalendarDays} label="Chamada Online" />
                         <LinkItem to="/desempenho" icon={BarChart3} label="Lançar Notas" />
                         <LinkItem to="/tarefas" icon={BookOpen} label="Gestão de Tarefas" />
+                        <LinkItem to="/grade" icon={Calendar} label="Grade Horária" />
                         <LinkItem to="/nova-ocorrencia" icon={PlusCircle} label="Ocorrência" />
+
+                        {isAdmin && <LinkItem to="/configuracoes" icon={Settings} label="Configurações" />}
                     </>
                 )}
 
@@ -83,10 +78,7 @@ export function Sidebar() {
                 )}
             </nav>
 
-            {/* RODAPÉ DE USUÁRIO */}
             <div className="p-5 border-t border-slate-800 bg-[#020617]">
-
-                {/* Info do Usuário */}
                 <div className="flex items-center gap-3 mb-4 px-1">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center font-bold text-sm shadow-lg border-2 border-slate-800 text-white">
                         {user?.login?.substring(0,2).toUpperCase()}
@@ -99,19 +91,16 @@ export function Sidebar() {
                     </div>
                 </div>
 
-                {/* Botões de Ação (Lado a Lado) - RESTAURADO */}
                 <div className="grid grid-cols-2 gap-2">
                     <Link to="/perfil">
                         <button className="w-full flex items-center justify-center gap-2 py-2 bg-slate-800 hover:bg-blue-600 hover:text-white text-slate-400 rounded-lg text-xs font-bold transition border border-slate-700 group">
                             <UserCog size={14} className="group-hover:scale-110 transition-transform"/> Perfil
                         </button>
                     </Link>
-
                     <button onClick={signOut} className="w-full flex items-center justify-center gap-2 py-2 bg-slate-800 hover:bg-red-600 hover:text-white text-slate-400 rounded-lg text-xs font-bold transition border border-slate-700 group">
                         <LogOut size={14} className="group-hover:scale-110 transition-transform"/> Sair
                     </button>
                 </div>
-
             </div>
         </aside>
     );

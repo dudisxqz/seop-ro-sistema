@@ -1,61 +1,100 @@
 import React from 'react';
 
-export const DeclaracaoMatricula = React.forwardRef(({ aluno }, ref) => {
-    if (!aluno) return null;
+export const DeclaracaoMatricula = React.forwardRef(({ aluno, tipo = 'matricula', dadosExtras = {} }, ref) => {
+    // Proteção total: Se não tiver aluno, não renderiza nada (evita erro)
+    if (!aluno) return <div ref={ref} className="p-10 text-center">Dados do aluno não carregados.</div>;
 
     const dataHoje = new Date().toLocaleDateString('pt-BR', {
         day: 'numeric', month: 'long', year: 'numeric'
     });
 
+    const isFrequencia = tipo === 'frequencia';
+    const titulo = isFrequencia ? "ATESTADO DE FREQUÊNCIA" : "DECLARAÇÃO DE MATRÍCULA";
+
+    // Garante que os dados existam antes de chamar toUpperCase
+    const nomeAluno = aluno.nome ? aluno.nome.toUpperCase() : "NOME NÃO INFORMADO";
+    const matricula = aluno.matricula || "---";
+    const turma = aluno.turma || "---";
+
     return (
         <div ref={ref} style={styles.page}>
-            {/* Cabeçalho Oficial */}
+            {/* CABEÇALHO */}
             <div style={styles.header}>
-                <h2 style={{margin: 0, fontSize: '14px', textTransform: 'uppercase'}}>Governo do Estado de Rondônia</h2>
-                <h3 style={{margin: 0, fontSize: '12px', fontWeight: 'normal'}}>Secretaria de Estado da Educação</h3>
-                <h1 style={{marginTop: '20px', fontSize: '24px', textDecoration: 'underline'}}>DECLARAÇÃO DE MATRÍCULA</h1>
+                {/* Tenta carregar a imagem, se falhar, mostra texto */}
+                <div style={{fontSize:'11px', fontWeight:'bold', textTransform:'uppercase', letterSpacing: '1px'}}>Secretaria de Estado da Educação</div>
+                <h1 style={{margin: '5px 0', fontSize: '18px', color: '#003366', textTransform:'uppercase', fontWeight: '800'}}>Governo do Estado de Rondônia</h1>
+
+                <div style={{marginTop: '30px', fontSize: '22px', fontWeight: 'bold', textDecoration: 'underline', fontFamily: 'Times New Roman, serif'}}>
+                    {titulo}
+                </div>
             </div>
 
-            {/* Corpo do Texto */}
+            {/* CORPO DO TEXTO */}
             <div style={styles.body}>
                 <p style={styles.paragraph}>
-                    Declaramos, para os devidos fins de comprovação junto a quem interessar possa, que o(a) estudante:
+                    {isFrequencia
+                        ? "Atestamos, para os devidos fins de comprovação, que o(a) estudante:"
+                        : "Declaramos, para os devidos fins de comprovação junto a quem interessar possa, que o(a) estudante:"}
                 </p>
 
                 <div style={styles.studentBox}>
-                    <p><strong>NOME:</strong> {aluno.nome.toUpperCase()}</p>
-                    <p><strong>MATRÍCULA:</strong> {aluno.matricula}</p>
-                    <p><strong>TURMA:</strong> {aluno.turma}</p>
-                    <p><strong>SITUACÃO:</strong> <span style={{color: 'green'}}>ATIVO - CURSANDO</span></p>
+                    <div style={styles.studentRow}><span style={styles.label}>NOME:</span> {nomeAluno}</div>
+                    <div style={styles.studentRow}><span style={styles.label}>MATRÍCULA:</span> {matricula}</div>
+                    <div style={styles.studentRow}><span style={styles.label}>TURMA:</span> {turma}</div>
+                    <div style={styles.studentRow}>
+                        <span style={styles.label}>SITUAÇÃO:</span>
+                        <span style={{color: '#28a745', fontWeight:'bold'}}>ATIVO - CURSANDO</span>
+                    </div>
                 </div>
 
+                {isFrequencia ? (
+                    <>
+                        <p style={styles.paragraph}>
+                            Obteve frequência regular nas atividades escolares no período de <strong>{dadosExtras?.inicio || '---'}</strong> a <strong>{dadosExtras?.fim || '---'}</strong>.
+                        </p>
+                        <div style={{margin: '20px 0', padding: '15px', background: '#f8f9fa', border: '1px dashed #ccc', textAlign: 'center'}}>
+                            <p style={{fontSize: '18px', fontWeight: 'bold', color: '#003366'}}>
+                                Frequência Global: {dadosExtras?.percentual || 'Calculando...'}
+                            </p>
+                        </div>
+                    </>
+                ) : (
+                    <p style={styles.paragraph}>
+                        Encontra-se regularmente matriculado(a) nesta instituição de ensino no ano letivo de 2025, frequentando o turno <strong>INTEGRAL</strong>.
+                    </p>
+                )}
+
                 <p style={styles.paragraph}>
-                    Encontra-se regularmente matriculado(a) nesta instituição de ensino no ano letivo de 2025, frequentando o turno <strong>INTEGRAL</strong>.
+                    A presente declaração tem validade de 30 (trinta) dias a partir da data de sua emissão.
                 </p>
 
                 <p style={styles.paragraph}>
-                    Por ser verdade, firmamos a presente declaração.
+                    Por ser verdade, firmamos o presente documento.
                 </p>
             </div>
 
-            {/* Data e Assinatura */}
+            {/* RODAPÉ */}
             <div style={styles.footer}>
                 <p>Porto Velho - RO, {dataHoje}.</p>
 
-                <div style={styles.signatureLine}>_________________________________________________</div>
-                <p style={{fontSize: '12px', fontWeight: 'bold'}}>Secretaria Escolar</p>
-                <p style={{fontSize: '10px'}}>EduSync - Sistema de Gestão</p>
+                <div style={{marginTop: '60px'}}>
+                    <div style={styles.signatureLine}>_________________________________________________</div>
+                    <p style={{fontSize: '12px', fontWeight: 'bold', margin: '5px 0'}}>Secretaria Escolar</p>
+                    <p style={{fontSize: '10px', color: '#666'}}>EEEM MAJOR GUAPINDAIA</p>
+                </div>
             </div>
         </div>
     );
 });
 
 const styles = {
-    page: { padding: '50px', fontFamily: '"Times New Roman", Times, serif', color: '#000', background: 'white', height: '100%' },
-    header: { textAlign: 'center', marginBottom: '50px' },
-    body: { fontSize: '16px', lineHeight: '1.8', marginBottom: '50px' },
-    paragraph: { marginBottom: '20px', textIndent: '30px', textAlign: 'justify' },
-    studentBox: { border: '1px solid #000', padding: '20px', margin: '20px 0', borderRadius: '5px', background: '#f9f9f9' },
-    footer: { textAlign: 'center', marginTop: '100px' },
-    signatureLine: { marginTop: '50px', marginBottom: '5px' }
+    page: { padding: '40px 60px', fontFamily: '"Times New Roman", Times, serif', color: '#000', background: 'white', width: '100%', boxSizing: 'border-box', lineHeight: '1.6' },
+    header: { textAlign: 'center', marginBottom: '40px' },
+    body: { fontSize: '16px', marginBottom: '40px' },
+    paragraph: { marginBottom: '20px', textIndent: '40px', textAlign: 'justify' },
+    studentBox: { border: '2px solid #000', padding: '20px', margin: '30px 0', borderRadius: '0px', background: '#fff' },
+    studentRow: { marginBottom: '8px', borderBottom: '1px dashed #ccc', paddingBottom: '4px' },
+    label: { fontWeight: 'bold', width: '100px', display: 'inline-block' },
+    footer: { textAlign: 'center', marginTop: '60px' },
+    signatureLine: { marginBottom: '5px', fontWeight: 'bold' }
 };

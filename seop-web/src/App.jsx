@@ -21,6 +21,7 @@ import MinhaCarteirinha from './pages/MinhaCarteirinha';
 import MeusDocumentos from './pages/MeusDocumentos'; // NOVO
 import MinhasTarefas from './pages/MinhasTarefas';   // NOVO
 import Perfil from './pages/Perfil';
+import Configuracoes from './pages/Configuracoes';
 
 function PrivateRoute({ children }) {
     const { signed, loading } = useContext(AuthContext);
@@ -51,6 +52,7 @@ function App() {
                         <Route path="/chamada" element={<PrivateRoute><Chamada /></PrivateRoute>} />
                         <Route path="/desempenho" element={<PrivateRoute><Desempenho /></PrivateRoute>} />
                         <Route path="/nova-ocorrencia" element={<PrivateRoute><NovaOcorrencia /></PrivateRoute>} />
+                        <Route path="/configuracoes" element={<PrivateRoute><Configuracoes /></PrivateRoute>} />
 
                         {/* Visualizações */}
                         <Route path="/tarefas/aluno/:alunoId" element={<PrivateRoute><VisualizarTarefas /></PrivateRoute>} />

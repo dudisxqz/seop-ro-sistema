@@ -9,6 +9,8 @@ import com.seopro.api.ava.model.Tarefa;
 import com.seopro.api.ava.repository.TarefaRepository;
 import com.seopro.api.aviso.model.Aviso;
 import com.seopro.api.aviso.repository.AvisoRepository;
+import com.seopro.api.configuracao.model.ConfiguracaoEscola;
+import com.seopro.api.configuracao.repository.ConfiguracaoRepository;
 import com.seopro.api.grade.model.GradeHoraria;
 import com.seopro.api.grade.repository.GradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,8 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired private UsuarioRepository usuarioRepository;
     @Autowired private TarefaRepository tarefaRepository;
     @Autowired private GradeRepository gradeRepository;
-    @Autowired private AvisoRepository avisoRepository; // Injeção do novo repositório
+    @Autowired private AvisoRepository avisoRepository;
+    @Autowired private ConfiguracaoRepository configuracaoRepository; // NOVO REPOSITÓRIO
 
     @Override
     public void run(String... args) throws Exception {
@@ -78,21 +81,27 @@ public class DataInitializer implements CommandLineRunner {
             System.out.println("📅 GRADE CRIADA");
         }
 
-        // 5. AVISOS (NOVO)
+        // 5. AVISOS
         if (avisoRepository.count() == 0) {
             Aviso a1 = new Aviso();
-            a1.setTitulo("Reunião de Pais");
-            a1.setMensagem("Sexta-feira às 19h no auditório.");
-            a1.setDataPostagem(LocalDate.now());
-
-            Aviso a2 = new Aviso();
-            a2.setTitulo("Feira de Ciências");
-            a2.setMensagem("Entrega de projetos até dia 15.");
-            a2.setDataPostagem(LocalDate.now());
-            a2.setTurmaAlvo("3º Ano A");
-
-            avisoRepository.saveAll(Arrays.asList(a1, a2));
+            a1.setTitulo("Reunião de Pais"); a1.setMensagem("Sexta-feira às 19h."); a1.setDataPostagem(LocalDate.now());
+            avisoRepository.save(a1);
             System.out.println("📢 AVISOS CRIADOS");
+        }
+
+        // 6. CONFIGURAÇÕES (NOVO)
+        if (configuracaoRepository.count() == 0) {
+            ConfiguracaoEscola config = new ConfiguracaoEscola();
+            config.setAnoLetivo(2025);
+            config.setPeriodo1("1º Bimestre");
+            config.setPeriodo2("2º Bimestre");
+            config.setPeriodo3("3º Bimestre");
+            config.setPeriodo4("4º Bimestre");
+            config.setIaHabilitada(true);
+            config.setIaLimite(1200);
+
+            configuracaoRepository.save(config);
+            System.out.println("⚙️ CONFIGURAÇÕES INICIAIS CRIADAS");
         }
     }
 

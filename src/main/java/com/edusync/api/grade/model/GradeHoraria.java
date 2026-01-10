@@ -12,16 +12,16 @@ public class GradeHoraria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String turma; // Ex: "3º Ano A"
+    private String turma;
 
     @Enumerated(EnumType.STRING)
-    private DiaSemana dia; // SEGUNDA, TERCA...
+    private DiaSemana dia; 
 
     @Enumerated(EnumType.STRING)
-    private HorarioAula horario; // PRIMEIRA_AULA, SEGUNDA_AULA...
+    private HorarioAula horario;
 
     @Enumerated(EnumType.STRING)
-    private Materia materia; // MATEMATICA, PORTUGUES...
+    private Materia materia;
 
     public enum DiaSemana {
         SEGUNDA, TERCA, QUARTA, QUINTA, SEXTA
@@ -31,7 +31,7 @@ public class GradeHoraria {
         H07_00("07:00 - 07:50"),
         H07_50("07:50 - 08:40"),
         H08_40("08:40 - 09:30"),
-        H09_50("09:50 - 10:40"), // Pós intervalo
+        H09_50("09:50 - 10:40"), 
         H10_40("10:40 - 11:30");
 
         private final String descricao;

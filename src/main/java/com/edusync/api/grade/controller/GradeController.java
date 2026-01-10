@@ -22,17 +22,14 @@ public class GradeController {
     }
 
     @PostMapping
-    @Transactional // Importante para garantir que delete e save funcionem juntos
+    @Transactional 
     public GradeHoraria salvarAula(@RequestBody GradeHorariaDTO dados) {
-        // 1. Verifica se já existe aula neste dia/horário/turma
         var aulaExistente = repository.findByTurmaAndDiaAndHorario(
                 dados.turma(), dados.dia(), dados.horario()
         );
 
-        // 2. Se existir, deleta a antiga para dar lugar à nova (ou atualiza)
         aulaExistente.ifPresent(gradeHoraria -> repository.delete(gradeHoraria));
 
-        // 3. Cria a nova aula
         GradeHoraria novaAula = new GradeHoraria();
         novaAula.setTurma(dados.turma());
         novaAula.setDia(dados.dia());
@@ -42,7 +39,6 @@ public class GradeController {
         return repository.save(novaAula);
     }
 
-    // Endpoint para "Limpar" um horário (deixar vago)
     @DeleteMapping("/limpar")
     @Transactional
     public void removerAula(@RequestBody GradeHorariaDTO dados) {

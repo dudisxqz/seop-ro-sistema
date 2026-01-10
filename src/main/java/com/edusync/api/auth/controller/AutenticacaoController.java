@@ -32,7 +32,7 @@ public class AutenticacaoController {
         Usuario usuarioLogado = (Usuario) authentication.getPrincipal();
         var tokenJWT = tokenService.gerarToken(usuarioLogado);
 
-        // AGORA ENVIAMOS O ID JUNTO!
+        
         return ResponseEntity.ok(new DadosTokenJWT(tokenJWT, usuarioLogado.getPerfil().toString(), usuarioLogado.getId()));
     }
 }

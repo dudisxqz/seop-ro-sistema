@@ -32,7 +32,7 @@ public class NotaController {
                 .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
 
         if (notaRepository.existsByAlunoAndMateriaAndBimestre(aluno, dados.materia(), dados.bimestre())) {
-            throw new RuntimeException("❌ Erro: Já existe uma nota lançada para " +
+            throw new RuntimeException("Erro: Já existe uma nota lançada para " +
                     dados.materia() + " no " + dados.bimestre() + "º Bimestre.");
         }
 

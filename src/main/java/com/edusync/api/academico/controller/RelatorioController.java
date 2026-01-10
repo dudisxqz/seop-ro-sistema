@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/relatorios")
 public class RelatorioController {
 
-    @Autowired private AlunoRepository alunoRepository;
-    @Autowired private NotaRepository notaRepository;
-    @Autowired private OcorrenciaRepository ocorrenciaRepository;
-    @Autowired private IAService iaService;
+        @Autowired private AlunoRepository alunoRepository;
+        @Autowired private NotaRepository notaRepository;
+        @Autowired private OcorrenciaRepository ocorrenciaRepository;
+        @Autowired private IAService iaService;
 
-    @GetMapping("/gerar/{alunoId}")
-    public String gerarRelatorioCompleto(@PathVariable Long alunoId) {
+        @GetMapping("/gerar/{alunoId}")
+        public String gerarRelatorioCompleto(@PathVariable Long alunoId) {
 
         Aluno aluno = alunoRepository.findById(alunoId).orElseThrow();
 
@@ -52,6 +52,6 @@ public class RelatorioController {
         System.out.println("🤖 Enviando para IA: " + dadosParaIA);
 
         return iaService.gerarResposta("Gere um relatório pedagógico", dadosParaIA);
-    }
+        }
 
 }

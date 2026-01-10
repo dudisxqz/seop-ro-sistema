@@ -32,12 +32,11 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired private TarefaRepository tarefaRepository;
     @Autowired private GradeRepository gradeRepository;
     @Autowired private AvisoRepository avisoRepository;
-    @Autowired private ConfiguracaoRepository configuracaoRepository; // NOVO REPOSITÓRIO
+    @Autowired private ConfiguracaoRepository configuracaoRepository;
 
     @Override
     public void run(String... args) throws Exception {
 
-        // 1. USUÁRIOS
         System.out.println("🔄 Verificando usuários...");
         criarUsuarioSeNaoExistir("coordenacao", "123456", Usuario.Perfil.ADMIN);
         criarUsuarioSeNaoExistir("secretaria", "123456", Usuario.Perfil.SECRETARIA);
@@ -45,7 +44,6 @@ public class DataInitializer implements CommandLineRunner {
         criarUsuarioSeNaoExistir("pai", "123456", Usuario.Perfil.RESPONSAVEL);
         criarUsuarioSeNaoExistir("aluno", "123456", Usuario.Perfil.ALUNO);
 
-        // 2. ALUNOS
         if (alunoRepository.count() == 0) {
             List<Aluno> listaAlunos = new ArrayList<>();
 
@@ -61,7 +59,6 @@ public class DataInitializer implements CommandLineRunner {
             System.out.println("✅ ALUNOS CRIADOS");
         }
 
-        // 3. TAREFAS
         if (tarefaRepository.count() == 0) {
             Tarefa t1 = new Tarefa();
             t1.setTitulo("Frações"); t1.setDescricao("Pág 45."); t1.setDataEntrega(LocalDate.now().plusDays(3)); t1.setTurma("3º Ano A"); t1.setMateria("MATEMATICA");
@@ -71,7 +68,6 @@ public class DataInitializer implements CommandLineRunner {
             System.out.println("📚 TAREFAS CRIADAS");
         }
 
-        // 4. GRADE HORÁRIA
         if (gradeRepository.count() == 0) {
             List<GradeHoraria> grade = new ArrayList<>();
             grade.add(criarAula("3º Ano A", GradeHoraria.DiaSemana.SEGUNDA, GradeHoraria.HorarioAula.H07_00, Materia.MATEMATICA));
@@ -81,7 +77,6 @@ public class DataInitializer implements CommandLineRunner {
             System.out.println("📅 GRADE CRIADA");
         }
 
-        // 5. AVISOS
         if (avisoRepository.count() == 0) {
             Aviso a1 = new Aviso();
             a1.setTitulo("Reunião de Pais"); a1.setMensagem("Sexta-feira às 19h."); a1.setDataPostagem(LocalDate.now());
@@ -89,7 +84,6 @@ public class DataInitializer implements CommandLineRunner {
             System.out.println("📢 AVISOS CRIADOS");
         }
 
-        // 6. CONFIGURAÇÕES (NOVO)
         if (configuracaoRepository.count() == 0) {
             ConfiguracaoEscola config = new ConfiguracaoEscola();
             config.setAnoLetivo(2025);
@@ -105,7 +99,6 @@ public class DataInitializer implements CommandLineRunner {
         }
     }
 
-    // --- AUXILIARES ---
     private void criarUsuarioSeNaoExistir(String login, String senha, Usuario.Perfil perfil) {
         if (usuarioRepository.findByLogin(login) == null) {
             String senhaCriptografada = new BCryptPasswordEncoder().encode(senha);

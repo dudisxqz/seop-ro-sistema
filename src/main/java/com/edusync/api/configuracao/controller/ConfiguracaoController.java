@@ -15,7 +15,6 @@ public class ConfiguracaoController {
 
     @GetMapping
     public ConfiguracaoEscola obterConfiguracao() {
-        // Tenta achar a configuração existente. Se não tiver (banco novo), cria uma padrão na hora.
         return repository.findAll().stream().findFirst().orElseGet(() -> {
             ConfiguracaoEscola padrao = new ConfiguracaoEscola();
             padrao.setAnoLetivo(2025);
@@ -31,7 +30,6 @@ public class ConfiguracaoController {
 
     @PostMapping
     public ConfiguracaoEscola salvarConfiguracao(@RequestBody ConfiguracaoDTO dados) {
-        // Busca a configuração existente para atualizar (garante Singleton no banco)
         ConfiguracaoEscola config = repository.findAll().stream().findFirst().orElse(new ConfiguracaoEscola());
 
         config.setAnoLetivo(dados.anoLetivo());

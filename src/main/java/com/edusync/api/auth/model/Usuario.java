@@ -22,13 +22,12 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
 
-    // --- PERFIS UNIFICADOS ---
     public enum Perfil {
-        ADMIN,          // Coordenação Pedagógica (Antigo Diretor + Coord)
-        SECRETARIA,     // Secretaria Escolar
-        PROFESSOR,      // Docente
-        RESPONSAVEL,    // Pais
-        ALUNO           // Estudante
+        ADMIN,        
+        SECRETARIA,    
+        PROFESSOR,      
+        RESPONSAVEL,    
+        ALUNO          
     }
 
     public Usuario() {}

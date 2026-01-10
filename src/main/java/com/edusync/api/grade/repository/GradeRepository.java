@@ -8,7 +8,6 @@ import java.util.Optional;
 public interface GradeRepository extends JpaRepository<GradeHoraria, Long> {
     List<GradeHoraria> findByTurma(String turma);
 
-    // Novo método para encontrar aula específica (para substituir)
     Optional<GradeHoraria> findByTurmaAndDiaAndHorario(
             String turma,
             GradeHoraria.DiaSemana dia,

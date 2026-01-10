@@ -19,7 +19,6 @@ public class Tarefa {
 
     private LocalDate dataEntrega;
 
-    private String turma; // Ex: "3º Ano A" (Vincula a tarefa a uma turma inteira)
-
-    private String materia; // Ex: "MATEMATICA"
+    private String turma;
+    private String materia;
 }
